@@ -26,18 +26,22 @@ class Pipeline implements Serializable {
       }
 
       def withCodegenStage() {
+         script.echo "Adding codegen stage: lvVersion is $lvVersion"
          stages << new Codegen(script, buildConfiguration, lvVersion)
       }
 
       def withBuildStage() {
+         script.echo "Adding build stage: lvVersion is $lvVersion"
          stages << new Build(script, buildConfiguration, lvVersion)
       }
 
       def withPackageStage() {
+         script.echo "Adding package stage: lvVersion is $lvVersion"
          stages << new Package(script, buildConfiguration, lvVersion)
       }
 
       def withArchiveStage() {
+         script.echo "Adding archive stage: lvVersion is $lvVersion"
          stages << new Archive(script, buildConfiguration, lvVersion)
       }
 
@@ -97,11 +101,13 @@ class Pipeline implements Serializable {
 
          builders[lvVersion] = {
             script.node(nodeLabel) {
+               script.echo "lvVersion is $lvVersion"
                setup(lvVersion)
 
                def configuration = BuildConfiguration.load(script, JSON_FILE)
                configuration.printInformation(script)
 
+               script.echo "lvVersion is $lvVersion"
                def builder = new Builder(script, configuration, lvVersion)
                this.stages = builder.buildPipeline()
 
