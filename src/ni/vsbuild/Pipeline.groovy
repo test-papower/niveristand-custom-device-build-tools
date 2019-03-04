@@ -12,12 +12,12 @@ class Pipeline implements Serializable {
    PipelineInformation pipelineInformation
    def stages = []
 
-   static class Builder implements Serializable {
+   class Builder implements Serializable {
 
-      def script
-      BuildConfiguration buildConfiguration
-      String lvVersion
-      def stages = []
+      final def script
+      final BuildConfiguration buildConfiguration
+      final String lvVersion
+      final def stages = []
 
       Builder(def script, BuildConfiguration buildConfiguration, String lvVersion) {
          this.script = script
