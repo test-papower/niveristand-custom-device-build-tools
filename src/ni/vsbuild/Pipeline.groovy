@@ -22,7 +22,12 @@ class Pipeline implements Serializable {
       Builder(def script, BuildConfiguration buildConfiguration, String lvVersion) {
          this.script = script
          this.buildConfiguration = buildConfiguration
-         this.lvVersion = lvVersion
+
+         // Force a copy of the lvVersion string to prevent situation
+         // where Groovy (or Jenkins) is messing with this object causing
+         // builds to use the wrong version.
+         // Jenkins disallows the use of new String(string)
+         this.lvVersion = "$lvVersion"
       }
 
       def withCodegenStage() {
