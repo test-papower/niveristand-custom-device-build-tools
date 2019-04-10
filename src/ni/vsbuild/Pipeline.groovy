@@ -27,7 +27,7 @@ class Pipeline implements Serializable {
          // where Groovy (or Jenkins) is messing with this object causing
          // builds to use the wrong version.
          // Jenkins disallows the use of new String(string)
-         this.lvVersion = "$lvVersion"
+         this.lvVersion = "$lvVersion".toString()
       }
 
       def withCodegenStage() {
