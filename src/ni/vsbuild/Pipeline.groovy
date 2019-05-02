@@ -114,17 +114,19 @@ class Pipeline implements Serializable {
 
          builders[lvVersion] = {
             script.node(nodeLabel) {
-               script.echo "lvVersion is $lvVersion"
-               setup(lvVersion)
+               script.withEnv(["PARALLEL_BRANCH=$lvVersion"]) {
+                  script.echo "lvVersion is $lvVersion"
+                  setup(lvVersion)
 
-               def configuration = BuildConfiguration.load(script, JSON_FILE)
-               configuration.printInformation(script)
+                  def configuration = BuildConfiguration.load(script, JSON_FILE)
+                  configuration.printInformation(script)
 
-               script.echo "lvVersion is $lvVersion"
-               def builder = new Builder(script, configuration, lvVersion)
-               this.stages = builder.buildPipeline()
+                  script.echo "lvVersion is $lvVersion"
+                  def builder = new Builder(script, configuration, lvVersion)
+                  this.stages = builder.buildPipeline()
 
-               executeStages()
+                  executeStages()
+               }
             }
          }
       }

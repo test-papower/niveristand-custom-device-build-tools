@@ -13,7 +13,7 @@ abstract class AbstractStage implements Stage {
       this.script = script
       this.stageName = stageName
       this.configuration = configuration
-      this.lvVersion = lvVersion
+      this.lvVersion = script.env.PARALLEL_BRANCH
    }
 
    void execute() {
