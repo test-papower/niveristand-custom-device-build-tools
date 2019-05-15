@@ -28,7 +28,7 @@ class Nipkg extends AbstractPackage {
       stageFiles()
 
       def nipkgOutput = script.nipkgBuild(PACKAGE_DIRECTORY, PACKAGE_DIRECTORY)
-      script.copyFiles(PACKAGE_DIRECTORY, "\"$payloadDir\\$INSTALLER_DIRECTORY\"", nipkgOutput)
+      script.copyFiles(PACKAGE_DIRECTORY, "\"$payloadDir\\$INSTALLER_DIRECTORY\"", [files: nipkgOutput])
    }
 
    // This method is responsible for setting up the directory and file
@@ -93,7 +93,15 @@ class Nipkg extends AbstractPackage {
    }
 
    private void stagePayload() {
+      if(!installDestination) {
+         // If installDestination is not provided, build an
+         // empty package (virtual package).
+         // A virtual package is useful for defining package
+         // relationships without requiring a package payload.
+         return
+      }
+
       def destination = updateVersionVariables(installDestination)
-      script.copyFiles(payloadDir, "$PACKAGE_DIRECTORY\\$DATA_DIRECTORY\\$destination")
+      script.copyFiles(payloadDir, "$PACKAGE_DIRECTORY\\$DATA_DIRECTORY\\$destination", [exclusions: "*manifest.*"])
    }
 }
