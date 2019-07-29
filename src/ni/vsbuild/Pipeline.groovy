@@ -118,7 +118,8 @@ class Pipeline implements Serializable {
                   script.echo "lvVersion is $lvVersion"
                   setup(lvVersion)
 
-                  def configuration = BuildConfiguration.load(script, JSON_FILE)
+
+                  def configuration = BuildConfiguration.load(script, JSON_FILE, lvVersion)
                   configuration.printInformation(script)
 
                   script.echo "lvVersion is $lvVersion"

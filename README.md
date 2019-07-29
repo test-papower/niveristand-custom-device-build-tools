@@ -6,12 +6,12 @@ Two files are required in order to use this pipeline for a given repository, a `
 
 ### Node Labels
 Each node capable of building a custom device must have the label *'veristand'* and a label for each version of LabVIEW/VeriStand installed.
-A node that is capable of building a custom device for VeriStand 2016 and 2017 would have the labels `veristand, 2016, 2017`.
+A node that is capable of building a custom device for VeriStand 2016 and 2017 would have the labels `veristand`, `2016`, and `2017`.
 
 ### Jenkinsfile
 The pipeline is used by a `Jenkinsfile` defined in other repositories in this organization.
 
-The Jenkins server must be configured to load this library implicitly, either by the Jenkins Pipeline Global Library or as a Shared Pipeline Library within a job folder. To build a custom device for LabVIEW/VeriStand 2016 and 2017 if the library name configured in Jenkins is `vs-common-build`:
+The Jenkins server must be configured to load this library implicitly, either by the Jenkins Pipeline Global Library or as a Shared Pipeline Library within a job folder. To build a custom device for LabVIEW/VeriStand 2016 and 2017 if the library name configured in Jenkins is `vs-build-tools`:
 
 ```groovy
 // Jenkinsfile
