@@ -14,20 +14,17 @@ class Pipeline implements Serializable {
 
    class Builder implements Serializable {
 
-      final def script
-      final BuildConfiguration buildConfiguration
-      final String lvVersion
-      final def stages = []
+      def script
+      BuildConfiguration buildConfiguration
+      String lvVersion
+      String manifestFile
+      def stages = []
 
-      Builder(def script, BuildConfiguration buildConfiguration, String lvVersion) {
+      Builder(def script, BuildConfiguration buildConfiguration, String lvVersion, String manifestFile) {
          this.script = script
          this.buildConfiguration = buildConfiguration
-
-         // Force a copy of the lvVersion string to prevent situation
-         // where Groovy (or Jenkins) is messing with this object causing
-         // builds to use the wrong version.
-         // Jenkins disallows the use of new String(string)
-         this.lvVersion = "$lvVersion".toString()
+         this.lvVersion = lvVersion
+         this.manifestFile = manifestFile
       }
 
       def withCodegenStage() {
@@ -50,8 +47,7 @@ class Pipeline implements Serializable {
       }
 
       def withArchiveStage() {
-         script.echo "Adding archive stage: lvVersion is $lvVersion"
-         stages << new Archive(script, buildConfiguration, lvVersion)
+         stages << new Archive(script, buildConfiguration, lvVersion, manifestFile)
       }
 
       // The plan is to enable automatic merging from master to
@@ -123,7 +119,7 @@ class Pipeline implements Serializable {
                   configuration.printInformation(script)
 
                   script.echo "lvVersion is $lvVersion"
-                  def builder = new Builder(script, configuration, lvVersion)
+                  def builder = new Builder(script, configuration, lvVersion, MANIFEST_FILE)
                   this.stages = builder.buildPipeline()
 
                   executeStages()
