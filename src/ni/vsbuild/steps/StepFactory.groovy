@@ -16,31 +16,31 @@ class StepFactory implements Serializable {
    static Step createStep(script, mapStep, lvVersion) {
       def type = mapStep.get('type')
 
-      if(type == 'lvBuildAll') {
+      if (type == 'lvBuildAll') {
          return new LvBuildAllStep(script, mapStep, lvVersion)
       }
 
-      if(type == 'lvBuildSpec') {
+      if (type == 'lvBuildSpec') {
          return new LvBuildSpecStep(script, mapStep, lvVersion)
       }
 
-      if(type == 'lvBuildSpecAllTargets') {
+      if (type == 'lvBuildSpecAllTargets') {
          return new LvBuildSpecAllTargetsStep(script, mapStep, lvVersion)
       }
 
-      if(type == 'lvRunVi') {
+      if (type == 'lvRunVi') {
          return new LvRunViStep(script, mapStep, lvVersion)
       }
 
-      if(type == 'lvSetConditionalSymbol') {
+      if (type == 'lvSetConditionalSymbol') {
          return new LvSetConditionalSymbolStep(script, mapStep, lvVersion)
       }
 
-      if(type == 'lvVITester') {
+      if (type == 'lvVITester') {
          return new LvVITesterStep(script, mapStep, lvVersion)
       }
 
-      if(type == 'gitReset') {
+      if (type == 'gitReset') {
          return new GitResetStep(script, mapStep)
       }
 
